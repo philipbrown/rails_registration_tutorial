@@ -5,6 +5,9 @@ class UserTest < ActiveSupport::TestCase
     @subject = User.new
   end
 
+  should have_many(:assignments)
+  should have_many(:roles).through(:assignments)
+
   should validate_presence_of(:email)
   should validate_presence_of(:password)
 
@@ -40,5 +43,13 @@ class UserTest < ActiveSupport::TestCase
     user.confirm!
 
     assert(user.confirmed?)
+  end
+
+  test "user should have role" do
+    assert_not(@subject.role? :admin)
+
+    @subject.roles << Role.new(name: "admin")
+
+    assert(@subject.role? :admin)
   end
 end
