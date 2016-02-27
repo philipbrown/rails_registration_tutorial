@@ -6,6 +6,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   should validate_presence_of(:email)
+  should validate_presence_of(:password)
 
   test "email should be a valid email" do
     @subject.email = "invalid"
