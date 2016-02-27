@@ -31,4 +31,14 @@ class RegisterFormTest < ActiveSupport::TestCase
 
     assert_includes(@form.errors[:email], "has already been taken")
   end
+
+  test "should create new unconfirmed guest user" do
+    create(:role, name: "guest")
+
+    @form.validate(email: "name@domain.com", password: "password")
+
+    assert(@form.save)
+    assert_not(@user.confirmed?)
+    assert(@user.role?(:guest), "user does not have the role of :guest")
+  end
 end

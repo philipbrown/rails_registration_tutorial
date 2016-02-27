@@ -6,4 +6,11 @@ class RegisterForm < Reform::Form
 
   validates :email,    presence: true, email: true, unique: true
   validates :password, presence: true
+
+  def save
+    sync
+
+    model.roles << Role.find_by(name: :guest)
+    model.save
+  end
 end
