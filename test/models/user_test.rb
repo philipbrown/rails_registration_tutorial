@@ -30,4 +30,14 @@ class UserTest < ActiveSupport::TestCase
 
     assert(user.authenticate("password"))
   end
+
+  test "should confirm the user" do
+    user = create(:user)
+
+    assert_not(user.confirmed?)
+
+    user.confirm!
+
+    assert(user.confirmed?)
+  end
 end
